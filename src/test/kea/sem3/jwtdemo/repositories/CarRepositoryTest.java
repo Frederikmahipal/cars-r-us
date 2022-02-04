@@ -16,12 +16,11 @@ class CarRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        carRepository.save(new Car(200, "f", "c"));
-        carRepository.save(new Car(200, "f", "c"));
+        carRepository.save(new Car(500, "audi", "beta"));
     }
 
     @Test
     public void testCount(){
-        assertEquals(2, carRepository.count());
+        assertEquals(1, carRepository);
     }
 }
