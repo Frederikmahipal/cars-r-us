@@ -47,8 +47,8 @@ class CarControllerTest {
     @BeforeEach
     public void setup() {
         carRepository.deleteAll();
-        carFordId = carRepository.save(new Car("Ford", "Galaxy", 700, 20)).getId();
-        carSuzukiId = carRepository.save(new Car("Audi", "q7", 1200, 18)).getId();
+        carFordId = carRepository.save(new Car("Ford", "Galaxy", 500, 20)).getId();
+        carSuzukiId = carRepository.save(new Car("Audi", "q7", 500, 20)).getId();
     }
 
     @Test
@@ -64,7 +64,7 @@ class CarControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(carFordId))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.model").value("Focus"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.model").value("Galaxy"));
 
     }
 
@@ -79,18 +79,18 @@ class CarControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0]").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2))
-                //One way of testing this
-                .andExpect(MockMvcResultMatchers.jsonPath(model, "Focus").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath(model, "Vitara").exists())
-                //Another way
-                .andExpect(MockMvcResultMatchers.content().string(containsString("Focus")))
-                .andExpect(MockMvcResultMatchers.content().string(containsString("Vitara")));
+
+                .andExpect(MockMvcResultMatchers.jsonPath(model, "Galaxy").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath(model, "q7").exists())
+
+                .andExpect(MockMvcResultMatchers.content().string(containsString("Galaxy")))
+                .andExpect(MockMvcResultMatchers.content().string(containsString("q7")));
 
     }
 
     @Test
     public void testAddCar() throws Exception {
-        CarRequest newCar = new CarRequest("WW", "Polo", 200, 10);
+        CarRequest newCar = new CarRequest("WW", "Polo", 500, 20);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/cars")
                         .contentType("application/json")
                         .accept("application/json")
