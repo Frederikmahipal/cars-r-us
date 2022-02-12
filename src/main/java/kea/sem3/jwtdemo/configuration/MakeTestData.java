@@ -1,15 +1,14 @@
 package kea.sem3.jwtdemo.configuration;
 
 import kea.sem3.jwtdemo.entity.*;
+import kea.sem3.jwtdemo.repositories.CarRepository;
 import kea.sem3.jwtdemo.repositories.MemberRepository;
+import kea.sem3.jwtdemo.repositories.ReservationRepository;
 import kea.sem3.jwtdemo.security.UserRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
-
-import java.time.LocalDate;
-import java.time.Month;
 
 @Controller
 @Profile("!test")
@@ -18,13 +17,17 @@ public class MakeTestData implements ApplicationRunner {
 
     UserRepository userRepository;
     MemberRepository memberRepository;
+    CarRepository carRepository;
+    ReservationRepository reservationRepository;
 
-    public MakeTestData(UserRepository userRepository, MemberRepository memberRepository) {
+    public MakeTestData(UserRepository userRepository, MemberRepository memberRepository, CarRepository carRepository, ReservationRepository reservationRepository) {
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
+        this.carRepository = carRepository;
+        this.reservationRepository = reservationRepository;
     }
 
-    public  void makePlainUsers(){
+    public void makePlainUsers(){
         BaseUser user = new BaseUser("user", "user@a.dk", "test12");
         user.addRole(Role.USER);
         BaseUser admin = new BaseUser("admin", "admin@a.dk", "test12");
@@ -38,9 +41,10 @@ public class MakeTestData implements ApplicationRunner {
         userRepository.save(admin);
         userRepository.save(both);
 
-        Member m1 = new Member("batman", "bat@man.dk", "test123", "Bruice");
-        m1.addRole(Role.USER);
-        memberRepository.save(m1);
+        Member mem1 = new Member("xxx","guy@stuff.dk","test12","Jan");
+        mem1.addRole(Role.USER);
+
+        memberRepository.save(mem1);
 
         System.out.println("########################################################################################");
         System.out.println("########################################################################################");
@@ -53,6 +57,18 @@ public class MakeTestData implements ApplicationRunner {
         System.out.println("Created TEST Users");
 
     }
+    public void makePlainCars(){
+        Car car1 = new Car("Tesla", "X", 1000,500);
+        Car car2 = new Car("Tesla", "Y", 1300,200);
+        carRepository.save(car1);
+        carRepository.save(car2);
+    }
+    public void makePlainReservations(){
+        Car car1 = new Car("Tesla", "X", 100,20);
+        Car car2 = new Car("Tesla", "Y", 130,20);
+        carRepository.save(car1);
+        carRepository.save(car2);
+    }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -60,7 +76,6 @@ public class MakeTestData implements ApplicationRunner {
         userRepository.deleteAll();
 
         makePlainUsers();
-
-
+        makePlainCars();
     }
 }

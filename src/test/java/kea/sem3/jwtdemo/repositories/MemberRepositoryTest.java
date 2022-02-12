@@ -1,6 +1,5 @@
 package kea.sem3.jwtdemo.repositories;
 
-
 import kea.sem3.jwtdemo.entity.Member;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,12 +16,12 @@ class MemberRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        memberRepository.save(new Member("xxx","xxx@yyy.dk","test123","bob"));
-        memberRepository.save(new Member("zzz","zzz@yyy.dk","test123","zbob"));
+        memberRepository.save(new Member("xxx","xxx@a.dk","test1","f"));
+        memberRepository.save(new Member("zzz","zzz@a.dk","test1","fv"));
     }
 
     @Test
-    public void testCount(){
-        assertEquals(2, memberRepository.count());
+    public void testCount() {
+        assertEquals(2,memberRepository.count());
     }
 }

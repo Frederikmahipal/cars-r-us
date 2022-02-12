@@ -1,34 +1,57 @@
 package kea.sem3.jwtdemo.entity;
 
+import kea.sem3.jwtdemo.dto.CarRequest;
+import lombok.Getter;
+import lombok.Setter;
+import org.aspectj.asm.IModelFilter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "car")
 public class Car {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
-    private int pricePrDay;
+
     private String brand;
+
     private String model;
 
-    @Column(name="created")
+    @Column(name="price_per_day")
+    private double pricePrDay;
+
+    private double discount;
+
+    @Column(name="date_created")
     @CreationTimestamp
-    private LocalDateTime created;
+    private LocalDateTime dateCreated;
 
-    @Column(name = "last edited")
+    @Column(name = "date_edited")
     @UpdateTimestamp
-    private LocalDateTime lastEdited;
+    private LocalDateTime dateEdited;
 
-    public Car(int pricePrDay, String brand, String model) {
-        this.pricePrDay = pricePrDay;
+    public Car(){}
+
+    public Car(CarRequest body) {
+        this.brand = body.getBrand();
+        this.model = body.getModel();
+        this.pricePrDay = body.getPricePrDay();
+        this.discount = body.getBestDiscount();
+    }
+
+    public Car(String brand, String model, double pricePrDay, double discount) {
         this.brand = brand;
         this.model = model;
+        this.pricePrDay = pricePrDay;
+        this.discount = discount;
     }
 
-    public Car() {
-    }
 }
