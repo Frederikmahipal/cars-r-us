@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'cars3rdSem'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_21219B88B1CB4B96B4C7335B1A7BF357 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_87E9C740B4F84483AA7EAA2EB62B72EF }}
           package: '*.war'
