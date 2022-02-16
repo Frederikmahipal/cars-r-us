@@ -1,39 +1,35 @@
 package kea.sem3.jwtdemo.entity;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "reservation")
 public class Reservation {
+
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
 
-    @Column(name="reservation_date")
     @CreationTimestamp
-    private LocalDateTime reservationDate;
+    LocalDateTime reservationDate;
 
-    @Column(name="rental_date")
-    @CreationTimestamp
-    private LocalDateTime rentalDate;
+    LocalDate rentalDate;
 
-    public Reservation() {
+    @ManyToOne
+    Car reservedCar;
+
+    @ManyToOne
+    Member reservedTo;
+
+    public Reservation(LocalDate date,Car reservedCar, Member reservedTo){
+        this.rentalDate = date;
+        this.reservedCar = reservedCar;
+        this.reservedTo = reservedTo;
+        //Perhaps a few lines more
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public LocalDateTime getReservationDate() {
-        return reservationDate;
-    }
-
-    public LocalDateTime getRentalDate() {
-        return rentalDate;
-    }
+    public Reservation() { }
 }
