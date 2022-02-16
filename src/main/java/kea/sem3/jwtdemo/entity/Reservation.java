@@ -1,11 +1,13 @@
 package kea.sem3.jwtdemo.entity;
 
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Getter
 @Entity
 public class Reservation {
 
@@ -33,7 +35,5 @@ public class Reservation {
 
     public Reservation() { }
 
-    public int getId() {
-        return id;
-    }
+
 }
