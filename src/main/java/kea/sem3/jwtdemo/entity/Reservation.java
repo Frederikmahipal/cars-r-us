@@ -32,4 +32,8 @@ public class Reservation {
     }
 
     public Reservation() { }
+
+    public int getId() {
+        return id;
+    }
 }
